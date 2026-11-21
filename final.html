@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement Ceremony | Akash & Sakshi</title>
+    
+    <!-- Google Fonts matching the Hero & Royal Gateway Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        heroCream: '#F7F3EC',
+                        softBlush: '#EDE0D4',
+                        chocolate: '#3B2314',
+                        darkCocoa: '#261409',
+                        royalGold: '#B88924',
+                        lightGold: '#E8CE82',
+                        terracotta: '#C87D55',
+                        sageWash: '#A7B09A',
+                        sandWash: '#DFC5A7',
+                    },
+                    fontFamily: {
+                        editorial: ['"Cinzel"', 'serif'],
+                        royalDeco: ['"Cinzel Decorative"', 'serif'],
+                        scriptRoyal: ['"Great Vibes"', 'cursive'],
+                        serifBody: ['"Cormorant Garamond"', 'serif'],
+                        sansClean: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Subtle Fine Linen / Cotton Paper Texture */
+        .cotton-paper {
+            background-color: #F7F3EC;
+            background-image: 
+                radial-gradient(rgba(59, 35, 20, 0.03) 1px, transparent 0),
+                radial-gradient(rgba(184, 137, 36, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+
+        /* 3D Royal Gate Perspective & Door Swing */
+        #royal-gate-overlay {
+            perspective: 1800px;
+            transition: opacity 0.9s ease 0.75s, visibility 0.9s ease 0.75s;
+        }
+        #royal-gate-overlay.gate-opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .gate-half-left {
+            transform-origin: left center;
+            transition: transform 1.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+            backface-visibility: hidden;
+        }
+        .gate-half-right {
+            transform-origin: right center;
+            transition: transform 1.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+            backface-visibility: hidden;
+        }
+
+        #royal-gate-overlay.gate-opened .gate-half-left {
+            transform: rotateY(-105deg);
+        }
+        #royal-gate-overlay.gate-opened .gate-half-right {
+            transform: rotateY(105deg);
+        }
+
+        /* Ripple Pulse for Gold Tap Button */
+        @keyframes goldRipple {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(232, 206, 130, 0.75);
+            }
+            70% {
+                transform: scale(1.04);
+                box-shadow: 0 0 0 20px rgba(232, 206, 130, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(232, 206, 130, 0);
+            }
+        }
+        .tap-pulse {
+            animation: goldRipple 2.2s infinite;
+        }
+
+        /* Subtle Scroll Reveal */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.85s ease-out, transform 0.85s ease-out;
+        }
+        .reveal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-[#EFE9DF] text-chocolate font-serifBody antialiased selection:bg-chocolate selection:text-heroCream overflow-x-hidden">
+
+    <!-- Floating Music Toggle Button -->
+    <button id="music-toggle" aria-label="Toggle Background Music" 
+        class="fixed bottom-5 right-5 z-50 flex items-center gap-2 bg-chocolate/95 text-heroCream border border-royalGold/50 px-4 py-2 rounded-full shadow-lg hover:bg-darkCocoa transition-all duration-300">
+        <span id="music-icon" class="text-xs">🔇</span>
+        <span id="music-text" class="font-sansClean text-[10px] font-medium tracking-[0.22em] uppercase">Play Flute</span>
+    </button>
+
+    <!-- Royalty-Free Soft Instrumental Flute Audio -->
+    <audio id="bg-music" loop preload="none">
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc53107.mp3?filename=indian-flute-meditation-124494.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ===================================================================== -->
+    <!-- ROYAL PEACOCK GATEWAY "TAP TO OPEN" ENTRANCE (GOOGLE DRIVE HOSTED)    -->
+    <!-- ===================================================================== -->
+    <div id="royal-gate-overlay" class="fixed inset-0 z-40 bg-darkCocoa flex items-center justify-center overflow-hidden select-none">
+        
+        <div id="gate-trigger" class="relative w-full h-full max-w-md sm:max-w-lg mx-auto flex cursor-pointer overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.85)] border-x border-royalGold/40 bg-chocolate">
+            
+            <!-- LEFT HALF OF GATEWAY IMAGE -->
+            <div class="gate-half-left relative w-1/2 h-full overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/d/19DNEfdTp-LnyYlyEtxJcj-waVltGET9o=w1200" 
+                     onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=19DNEfdTp-LnyYlyEtxJcj-waVltGET9o';"
+                     alt="Royal Peacock Gate Left" 
+                     class="absolute top-0 left-0 w-[200%] max-w-none h-full object-cover object-center pointer-events-none">
+            </div>
+
+            <!-- RIGHT HALF OF GATEWAY IMAGE -->
+            <div class="gate-half-right relative w-1/2 h-full overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/d/19DNEfdTp-LnyYlyEtxJcj-waVltGET9o=w1200" 
+                     onerror="this.onerror=null; this.src='https://drive.google.com/uc?export=view&id=19DNEfdTp-LnyYlyEtxJcj-waVltGET9o';"
+                     alt="Royal Peacock Gate Right" 
+                     class="absolute top-0 right-0 w-[200%] max-w-none h-full object-cover object-center pointer-events-none">
+            </div>
+
+            <!-- CENTER INTERACTIVE OVERLAY: TAP BUTTON & COUPLE NAMES -->
+            <div id="gate-ui-overlay" class="absolute inset-0 flex flex-col items-center justify-end pb-10 sm:pb-12 px-4 pointer-events-none transition-opacity duration-500 bg-gradient-to-t from-black/80 via-black/15 to-transparent">
+                
+                <!-- Gold Circle Hand Tap Button -->
+                <div class="flex flex-col items-center mb-10 sm:mb-12">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-lightGold/60 flex items-center justify-center p-1.5 backdrop-blur-[1px]">
+                        <div class="tap-pulse w-full h-full rounded-full bg-gradient-to-br from-[#F3DC99] via-[#D4AF37] to-[#9E7818] shadow-xl flex items-center justify-center text-darkCocoa">
+                            <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+                                <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/>
+                                <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+                                <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 bg-darkCocoa/85 border border-royalGold/60 px-5 py-1.5 rounded-full shadow-lg">
+                        <span class="font-sansClean text-[11px] font-medium tracking-[0.28em] text-heroCream uppercase">
+                            Tap to Open
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Couple Name & Event Subtitle -->
+                <div class="text-center w-full">
+                    <p class="font-sansClean text-[10px] sm:text-xs tracking-[0.35em] text-lightGold uppercase mb-1 drop-shadow">
+                        The Engagement Of
+                    </p>
+                    <h2 class="font-scriptRoyal text-4xl sm:text-5xl text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.95)]">
+                        Akash <span class="text-lightGold">&amp;</span> Sakshi
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MAIN INVITATION SCROLL CONTAINER (SECTIONS 1, 2, 3 & 4)               -->
+    <!-- ===================================================================== -->
+    <main id="main-content" class="min-h-screen flex flex-col items-center sm:py-8 sm:px-4">
+        
+        <!-- Unified Royal Cream Card Shell -->
+        <div class="w-full max-w-md sm:max-w-xl cotton-paper shadow-[0_20px_60px_rgba(59,35,20,0.12)] sm:border sm:border-chocolate/10 overflow-hidden">
+
+            <!-- =============================================================== -->
+            <!-- SECTION 1: COVER / INVOCATION HERO PAGE (GANESH VANDANA)        -->
+            <!-- =============================================================== -->
+            <section id="section-1-hero" class="relative min-h-screen sm:min-h-[820px] flex flex-col justify-between px-6 py-12 sm:px-14 sm:py-14 text-center overflow-hidden">
+
+                <!-- Top-Left Sage & Warm Sand Watercolor + Botanical Leaves -->
+                <svg class="absolute -top-6 -left-6 w-52 h-64 sm:w-64 sm:h-72 pointer-events-none select-none" viewBox="0 0 260 300" fill="none">
+                    <circle cx="45" cy="60" r="85" fill="#A7B09A" fill-opacity="0.32"/>
+                    <circle cx="25" cy="145" r="78" fill="#DFC5A7" fill-opacity="0.38"/>
+                    <path d="M90 0 C115 65, 85 135, 0 155" stroke="#B88924" stroke-width="0.8" stroke-opacity="0.55"/>
+                    <g stroke="#4E3524" stroke-width="0.9" stroke-opacity="0.65" stroke-linecap="round">
+                        <path d="M5 170 Q45 130 88 102"/>
+                        <path d="M32 145 C22 128, 28 112, 44 114 C46 128, 39 140, 32 145 Z"/>
+                        <path d="M54 127 C45 110, 52 95, 68 98 C69 111, 62 122, 54 127 Z"/>
+                        <path d="M40 139 C56 142, 68 134, 66 122 C54 123, 45 131, 40 139 Z"/>
+                        <path d="M64 120 C79 122, 90 114, 88 102 C77 104, 69 112, 64 120 Z"/>
+                    </g>
+                </svg>
+
+                <!-- Top-Right Warm Sand & Terracotta Watercolor + Botanical Branch -->
+                <svg class="absolute -top-6 -right-6 w-56 h-72 sm:w-68 sm:h-80 pointer-events-none select-none" viewBox="0 0 260 320" fill="none">
+                    <circle cx="205" cy="55" r="88" fill="#D5A679" fill-opacity="0.38"/>
+                    <circle cx="235" cy="155" r="82" fill="#C87D55" fill-opacity="0.32"/>
+                    <path d="M145 0 C135 80, 175 150, 260 175" stroke="#B88924" stroke-width="0.8" stroke-opacity="0.55"/>
+                    <g stroke="#4E3524" stroke-width="0.9" stroke-opacity="0.65" stroke-linecap="round">
+                        <path d="M255 40 Q205 68 158 95"/>
+                        <path d="M222 58 C216 40, 200 34, 192 46 C202 56, 213 59, 222 58 Z"/>
+                        <path d="M196 73 C190 56, 174 51, 167 63 C177 72, 187 74, 196 73 Z"/>
+                        <path d="M214 63 C222 78, 216 92, 204 90 C203 78, 208 69, 214 63 Z"/>
+                        <path d="M188 78 C195 92, 189 105, 178 103 C177 92, 182 83, 188 78 Z"/>
+                    </g>
+                </svg>
+
+                <!-- Bottom-Left Warm Sand & Terracotta Watercolor + Botanical Leaves -->
+                <svg class="absolute -bottom-6 -left-6 w-56 h-68 sm:w-64 sm:h-76 pointer-events-none select-none" viewBox="0 0 260 300" fill="none">
+                    <circle cx="30" cy="185" r="85" fill="#DFC5A7" fill-opacity="0.42"/>
+                    <circle cx="65" cy="265" r="80" fill="#C87D55" fill-opacity="0.35"/>
+                    <g stroke="#4E3524" stroke-width="0.9" stroke-opacity="0.65" stroke-linecap="round">
+                        <path d="M0 245 Q42 195 75 148"/>
+                        <path d="M26 212 C12 204, 8 188, 20 182 C29 192, 29 203, 26 212 Z"/>
+                        <path d="M46 186 C33 178, 30 163, 42 157 C50 167, 49 178, 46 186 Z"/>
+                        <path d="M32 204 C48 206, 60 197, 57 185 C46 187, 37 195, 32 204 Z"/>
+                        <path d="M52 178 C67 179, 78 170, 75 158 C65 160, 57 169, 52 178 Z"/>
+                    </g>
+                </svg>
+
+                <!-- Bottom-Right Sage & Warm Sand Watercolor -->
+                <svg class="absolute -bottom-6 -right-6 w-52 h-60 sm:w-60 sm:h-68 pointer-events-none select-none" viewBox="0 0 240 260" fill="none">
+                    <circle cx="195" cy="165" r="78" fill="#A7B09A" fill-opacity="0.32"/>
+                    <circle cx="155" cy="235" r="72" fill="#DFC5A7" fill-opacity="0.38"/>
+                    <path d="M110 260 C125 200, 175 165, 240 160" stroke="#B88924" stroke-width="0.8" stroke-opacity="0.5"/>
+                </svg>
+
+                <!-- Hero Content Stack -->
+                <div class="relative z-10 flex flex-col items-center my-auto">
+                    
+                    <!-- Top Circular Blush-Cream Badge with Minimal Golden Ganesha -->
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-softBlush/90 flex items-center justify-center mb-5 shadow-xs">
+                        <svg class="w-10 h-10 sm:w-11 sm:h-11 text-chocolate" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M25 17 L32 10 L39 17" stroke="#B88924"/>
+                            <line x1="23" y1="20" x2="41" y2="20" stroke="#B88924"/>
+                            <path d="M32 23 V27" stroke="#B88924" stroke-width="2"/>
+                            <path d="M22 24 C14 23, 13 35, 21 37"/>
+                            <path d="M42 24 C50 23, 51 35, 43 37"/>
+                            <path d="M30 29 C30 38, 25 45, 33 48 C37 49, 39 45, 36 43"/>
+                            <circle cx="26.5" cy="27.5" r="1" fill="currentColor"/>
+                            <circle cx="37.5" cy="27.5" r="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+
+                    <!-- Sanskrit Invocation Header -->
+                    <p class="font-sansClean text-xs sm:text-sm tracking-[0.22em] text-royalGold font-medium">
+                        || श्री गणेशाय नमः ||
+                    </p>
+
+                    <!-- Sanskrit Shloka -->
+                    <p class="font-serifBody italic text-base sm:text-lg text-chocolate/90 mt-2.5 max-w-xs sm:max-w-sm leading-snug">
+                        “Vakratunda Mahakaya Suryakoti Samaprabha,<br>
+                        Nirvighnam Kuru Me Deva Sarva-Karyeshu Sarvada”
+                    </p>
+
+                    <!-- Four-Diamond Royal Divider -->
+                    <div class="flex items-center justify-center gap-3 my-6 w-full max-w-xs">
+                        <span class="h-[1px] flex-1 bg-chocolate/20"></span>
+                        <span class="text-royalGold text-sm tracking-widest">❖</span>
+                        <span class="h-[1px] flex-1 bg-chocolate/20"></span>
+                    </div>
+
+                    <!-- Cordially Invited Subtitle -->
+                    <p class="font-sansClean text-[10px] sm:text-xs tracking-[0.28em] uppercase text-chocolate/80 leading-relaxed mb-2">
+                        You Are Cordially<br class="sm:hidden"> Invited To Celebrate The
+                    </p>
+
+                    <!-- Main Ceremony Headline -->
+                    <h1 class="font-editorial text-3xl sm:text-5xl text-chocolate font-normal tracking-[0.14em] uppercase mb-7">
+                        Engagement
+                    </h1>
+
+                    <!-- Monogram (A • S) -->
+                    <div class="font-editorial text-base sm:text-lg tracking-[0.35em] text-chocolate/75 mb-4">
+                        A <span class="text-royalGold">&bull;</span> S
+                    </div>
+
+                    <!-- Couple Names Stacked -->
+                    <div class="space-y-1 sm:space-y-2 mb-6">
+                        <h2 class="font-royalDeco text-4xl sm:text-5xl text-chocolate font-bold tracking-wide">
+                            Akash
+                        </h2>
+                        <h2 class="font-royalDeco text-4xl sm:text-5xl text-chocolate font-bold tracking-wide">
+                            Sakshi
+                        </h2>
+                    </div>
+
+                    <!-- Warm Invitation Tagline -->
+                    <p class="font-sansClean text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-chocolate/80 max-w-xs sm:max-w-md leading-relaxed">
+                        Please join us as we celebrate the beginning of our forever
+                    </p>
+
+                    <!-- Thin Horizontal Hairline Divider -->
+                    <div class="w-full max-w-sm h-[1px] bg-chocolate/15 my-6"></div>
+
+                    <!-- Save The Date Block -->
+                    <div>
+                        <p class="font-sansClean text-[10px] sm:text-xs tracking-[0.3em] uppercase text-chocolate/70 mb-2">
+                            Save The Date
+                        </p>
+                        <p class="font-editorial text-lg sm:text-2xl font-medium tracking-wider text-chocolate">
+                            SUNDAY <span class="text-royalGold mx-1">&bull;</span> 29 NOV 2026 <span class="text-royalGold mx-1">&bull;</span> 11:30 AM
+                        </p>
+                        <p class="font-serifBody text-lg sm:text-xl font-semibold text-chocolate mt-2">
+                            Gulvani Maharaja Math, Deval Ganagapur
+                        </p>
+                    </div>
+
+                    <!-- Scroll Indicator -->
+                    <a href="#section-2-family" class="mt-9 flex flex-col items-center text-chocolate/60 hover:text-chocolate transition-colors">
+                        <span class="font-sansClean text-[9px] sm:text-[10px] tracking-[0.28em] uppercase mb-1">
+                            Scroll for Details
+                        </span>
+                        <span class="text-chocolate/70 text-sm animate-bounce">↓</span>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- SECTION 2: THE FORMAL INVITATION & FAMILY DETAILS (BRIDE HOST)  -->
+            <!-- =============================================================== -->
+            <section id="section-2-family" class="reveal-section relative px-6 py-14 sm:px-12 sm:py-16 text-center border-t border-chocolate/10 bg-gradient-to-b from-heroCream via-white/70 to-heroCream overflow-hidden">
+                
+                <!-- Subtle Top Ornamental Divider -->
+                <svg class="mx-auto w-64 h-10 text-royalGold/50 mb-6 pointer-events-none" viewBox="0 0 260 40" fill="none">
+                    <path d="M10 20 H105 M155 20 H250" stroke="currentColor" stroke-width="0.8"/>
+                    <path d="M130 8 L138 20 L130 32 L122 20 Z" stroke="currentColor" stroke-width="1"/>
+                    <circle cx="130" cy="20" r="2.5" fill="#B88924"/>
+                </svg>
+
+                <!-- 1. Formal Host Line (Inviting from the Bride's Family Side) -->
+                <div class="bg-white/95 border border-royalGold/40 rounded-sm px-5 py-7 sm:px-8 sm:py-8 shadow-[0_10px_30px_rgba(59,35,20,0.06)] mb-10 relative">
+                    <span class="absolute top-2.5 left-2.5 w-3.5 h-3.5 border-t border-l border-royalGold"></span>
+                    <span class="absolute top-2.5 right-2.5 w-3.5 h-3.5 border-t border-r border-royalGold"></span>
+                    <span class="absolute bottom-2.5 left-2.5 w-3.5 h-3.5 border-b border-l border-royalGold"></span>
+                    <span class="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 border-b border-r border-royalGold"></span>
+
+                    <p class="font-sansClean text-[10px] tracking-[0.3em] uppercase text-royalGold font-semibold mb-3">
+                        Cordial Invitation
+                    </p>
+                    <p class="font-serifBody text-lg sm:text-xl text-chocolate leading-relaxed">
+                        <span class="font-bold text-xl sm:text-2xl text-chocolate block mb-1">
+                            Smt. Sarita Digambar Lokhande<br>
+                            &amp; Shri Digambar Laxman Lokhande
+                        </span>
+                        <span class="text-xs sm:text-sm uppercase tracking-[0.22em] font-sansClean text-royalGold block my-2">
+                            cordially invite you
+                        </span>
+                        to grace the auspicious <span class="font-semibold">Engagement Ceremony</span> of their beloved daughter
+                    </p>
+                </div>
+
+                <!-- 2. Couple Spotlight Cards (Bride & Groom with Family Lineage) -->
+                <div class="space-y-6 my-8">
+                    
+                    <!-- Bride Card: Sakshi -->
+                    <div class="relative bg-white border border-chocolate/15 px-6 py-7 shadow-xs">
+                        <span class="absolute top-2 left-2 w-3.5 h-3.5 border-t border-l border-royalGold"></span>
+                        <span class="absolute top-2 right-2 w-3.5 h-3.5 border-t border-r border-royalGold"></span>
+                        <span class="absolute bottom-2 left-2 w-3.5 h-3.5 border-b border-l border-royalGold"></span>
+                        <span class="absolute bottom-2 right-2 w-3.5 h-3.5 border-b border-r border-royalGold"></span>
+
+                        <p class="font-sansClean text-[9px] tracking-[0.32em] uppercase text-royalGold mb-1">
+                            The Bride
+                        </p>
+                        <h3 class="font-royalDeco text-3xl sm:text-4xl text-chocolate font-bold tracking-wide mb-2">
+                            Sakshi
+                        </h3>
+                        <div class="w-12 h-[1px] bg-royalGold/50 mx-auto my-2.5"></div>
+                        <p class="font-serifBody italic text-base sm:text-lg text-chocolate/85">
+                            Beloved Daughter of<br>
+                            <span class="not-italic font-semibold text-chocolate">
+                                Smt. Sarita Digambar Lokhande<br>
+                                &amp; Shri Digambar Laxman Lokhande
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Sacred Union Emblem ("With") -->
+                    <div class="flex items-center justify-center gap-4 py-1">
+                        <span class="h-[1px] w-14 bg-royalGold/40"></span>
+                        <div class="w-10 h-10 rounded-full bg-softBlush/80 border border-royalGold/50 flex items-center justify-center">
+                            <span class="font-scriptRoyal text-2xl text-chocolate">with</span>
+                        </div>
+                        <span class="h-[1px] w-14 bg-royalGold/40"></span>
+                    </div>
+
+                    <!-- Groom Card: Akash -->
+                    <div class="relative bg-white border border-chocolate/15 px-6 py-7 shadow-xs">
+                        <span class="absolute top-2 left-2 w-3.5 h-3.5 border-t border-l border-royalGold"></span>
+                        <span class="absolute top-2 right-2 w-3.5 h-3.5 border-t border-r border-royalGold"></span>
+                        <span class="absolute bottom-2 left-2 w-3.5 h-3.5 border-b border-l border-royalGold"></span>
+                        <span class="absolute bottom-2 right-2 w-3.5 h-3.5 border-b border-r border-royalGold"></span>
+
+                        <p class="font-sansClean text-[9px] tracking-[0.32em] uppercase text-royalGold mb-1">
+                            The Groom
+                        </p>
+                        <h3 class="font-royalDeco text-3xl sm:text-4xl text-chocolate font-bold tracking-wide mb-2">
+                            Akash
+                        </h3>
+                        <div class="w-12 h-[1px] bg-royalGold/50 mx-auto my-2.5"></div>
+                        <p class="font-serifBody italic text-base sm:text-lg text-chocolate/85">
+                            Beloved Son of<br>
+                            <span class="not-italic font-semibold text-chocolate">
+                                Smt. Seema Laxmanrao Hibare<br>
+                                &amp; Shri Laxmanrao Hibare
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- 3. Illustrated Couple Portrait Frame -->
+                <div class="mt-10 pt-4">
+                    <div class="relative max-w-xs mx-auto p-2 bg-white border border-royalGold/50 rounded-t-full shadow-md">
+                        <div class="overflow-hidden rounded-t-full border border-chocolate/15 bg-softBlush/40 aspect-[4/5] flex items-center justify-center">
+                            <img src="1000564043.png" 
+                                 onerror="this.style.display='none'; document.getElementById('couple-monogram-fallback').style.display='flex';"
+                                 alt="Akash and Sakshi Couple Portrait" 
+                                 class="w-full h-full object-cover object-bottom">
+                            
+                            <!-- Graceful Fallback Crest -->
+                            <div id="couple-monogram-fallback" style="display:none;" class="w-full h-full flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-softBlush/50 to-heroCream">
+                                <span class="font-royalDeco text-4xl text-royalGold mb-2">S &amp; A</span>
+                                <p class="font-serifBody italic text-base text-chocolate/75">
+                                    “Two souls, one heart,<br>blessed by family &amp; tradition.”
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="font-serifBody italic text-base sm:text-lg text-chocolate/80 mt-4">
+                        “Your presence and blessings will make this milestone truly unforgettable.”
+                    </p>
+                </div>
+
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- SECTION 3: CEREMONY DETAILS & MUHURAT (COUNTDOWN & CALENDAR)    -->
+            <!-- =============================================================== -->
+            <section id="section-3-muhurat" class="reveal-section relative px-6 py-14 sm:px-12 sm:py-16 text-center border-t border-chocolate/10 bg-heroCream overflow-hidden">
+
+                <!-- Section Header -->
+                <p class="font-sansClean text-[10px] sm:text-xs tracking-[0.32em] uppercase text-royalGold font-semibold mb-2">
+                    Auspicious Schedule
+                </p>
+                <h2 class="font-editorial text-2xl sm:text-4xl text-chocolate tracking-[0.12em] uppercase mb-4">
+                    Ceremony &amp; Muhurat
+                </h2>
+
+                <div class="flex items-center justify-center gap-3 mb-8 w-full max-w-xs mx-auto">
+                    <span class="h-[1px] flex-1 bg-chocolate/20"></span>
+                    <span class="text-royalGold text-sm">❖</span>
+                    <span class="h-[1px] flex-1 bg-chocolate/20"></span>
+                </div>
+
+                <!-- 1. Gregorian Date & Hindu Tithi Card -->
+                <div class="bg-chocolate text-heroCream rounded-sm p-6 sm:p-8 shadow-lg border border-royalGold/50 mb-8 relative">
+                    <p class="font-sansClean text-[10px] tracking-[0.3em] uppercase text-lightGold mb-1">
+                        Auspicious Day &amp; Date
+                    </p>
+                    <h3 class="font-editorial text-2xl sm:text-3xl tracking-wider text-white font-semibold">
+                        Sunday, 29 November 2026
+                    </h3>
+                    <div class="w-16 h-[1px] bg-royalGold/50 mx-auto my-3"></div>
+                    <p class="font-serifBody italic text-base sm:text-lg text-heroCream/90">
+                        Kartika Krishna Shashthi &bull; Vikram Samvat 2083
+                    </p>
+                </div>
+
+                <!-- 2. Separated Ritual Timing vs. Dining Timing -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-10">
+                    
+                    <!-- Ring Exchange Muhurat: 11:30 AM -->
+                    <div class="relative bg-white border border-royalGold/40 p-6 shadow-xs flex flex-col items-center justify-center">
+                        <span class="absolute top-2 left-2 w-3 h-3 border-t border-l border-royalGold"></span>
+                        <span class="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-royalGold"></span>
+
+                        <!-- Minimal Ring Icon -->
+                        <div class="w-11 h-11 rounded-full bg-softBlush/80 flex items-center justify-center text-chocolate mb-3">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <circle cx="9" cy="14" r="5"/>
+                                <circle cx="15" cy="14" r="5"/>
+                                <path d="M12 5l2 2.5L12 10l-2-2.5L12 5z" stroke="#B88924"/>
+                            </svg>
+                        </div>
+
+                        <p class="font-sansClean text-[10px] tracking-[0.26em] uppercase text-royalGold font-semibold mb-1">
+                            Shubh Muhurat
+                        </p>
+                        <h4 class="font-editorial text-lg font-semibold text-chocolate uppercase tracking-wide">
+                            Ring Ceremony
+                        </h4>
+                        <p class="font-royalDeco text-2xl text-chocolate font-bold mt-2">
+                            11:30 AM
+                        </p>
+                        <p class="font-serifBody italic text-sm text-chocolate/75 mt-1">
+                            Engagement Ritual &amp; Blessings
+                        </p>
+                    </div>
+
+                    <!-- Festive Lunch / Dining Timing: 1:00 PM -->
+                    <div class="relative bg-white border border-royalGold/40 p-6 shadow-xs flex flex-col items-center justify-center">
+                        <span class="absolute top-2 left-2 w-3 h-3 border-t border-l border-royalGold"></span>
+                        <span class="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-royalGold"></span>
+
+                        <!-- Minimal Dining Icon -->
+                        <div class="w-11 h-11 rounded-full bg-softBlush/80 flex items-center justify-center text-chocolate mb-3">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+                                <path d="M4 15h16a8 8 0 0 1-16 0z"/>
+                                <path d="M12 4v3M8 5v2M16 5v2" stroke="#B88924"/>
+                                <line x1="3" y1="19" x2="21" y2="19"/>
+                            </svg>
+                        </div>
+
+                        <p class="font-sansClean text-[10px] tracking-[0.26em] uppercase text-royalGold font-semibold mb-1">
+                            Priti Bhojan
+                        </p>
+                        <h4 class="font-editorial text-lg font-semibold text-chocolate uppercase tracking-wide">
+                            Festive Lunch
+                        </h4>
+                        <p class="font-royalDeco text-2xl text-chocolate font-bold mt-2">
+                            1:00 PM
+                        </p>
+                        <p class="font-serifBody italic text-sm text-chocolate/75 mt-1">
+                            Onwards &bull; Traditional Feast
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- 3. Vibe-Code Touch: Live Countdown Timer -->
+                <div class="bg-white/95 border border-chocolate/15 rounded-sm p-6 sm:p-7 mb-8 shadow-xs">
+                    <p class="font-sansClean text-[10px] tracking-[0.3em] uppercase text-chocolate/70 mb-4">
+                        Counting Down To The Auspicious Moment
+                    </p>
+
+                    <div id="countdown-grid" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-sm mx-auto">
+                        <div class="bg-heroCream border border-royalGold/40 py-3 px-2 rounded-xs">
+                            <span id="cd-days" class="font-editorial text-2xl sm:text-3xl font-bold text-chocolate block">--</span>
+                            <span class="font-sansClean text-[9px] tracking-[0.2em] uppercase text-royalGold">Days</span>
+                        </div>
+                        <div class="bg-heroCream border border-royalGold/40 py-3 px-2 rounded-xs">
+                            <span id="cd-hours" class="font-editorial text-2xl sm:text-3xl font-bold text-chocolate block">--</span>
+                            <span class="font-sansClean text-[9px] tracking-[0.2em] uppercase text-royalGold">Hours</span>
+                        </div>
+                        <div class="bg-heroCream border border-royalGold/40 py-3 px-2 rounded-xs">
+                            <span id="cd-mins" class="font-editorial text-2xl sm:text-3xl font-bold text-chocolate block">--</span>
+                            <span class="font-sansClean text-[9px] tracking-[0.2em] uppercase text-royalGold">Mins</span>
+                        </div>
+                        <div class="bg-heroCream border border-royalGold/40 py-3 px-2 rounded-xs">
+                            <span id="cd-secs" class="font-editorial text-2xl sm:text-3xl font-bold text-chocolate block">--</span>
+                            <span class="font-sansClean text-[9px] tracking-[0.2em] uppercase text-royalGold">Secs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Vibe-Code Touch: Add to Calendar Buttons (Google Calendar + .ics) -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Engagement+Ceremony+-+Akash+%26+Sakshi&dates=20261129T060000Z/20261129T093000Z&details=You+are+cordially+invited+by+Smt.+Sarita+Digambar+Lokhande+%26+Shri+Digambar+Laxman+Lokhande+to+celebrate+the+Engagement+Ceremony+of+Sakshi+%26+Akash.+Ring+Ceremony+at+11%3A30+AM%2C+Lunch+at+1%3A00+PM.&location=Gulvani+Maharaja+Math+(Shri+Vasudevananda+Saraswati+Dharmashala)%2C+Sangam+Rd%2C+Deval+Ganagapur%2C+Karnataka+585212"
+                       target="_blank" rel="noopener noreferrer"
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-chocolate text-heroCream border border-royalGold/60 px-6 py-3 rounded-full font-sansClean text-[11px] font-medium tracking-[0.22em] uppercase shadow-md hover:bg-darkCocoa transition-all">
+                        <span>📅</span>
+                        <span>Google Calendar</span>
+                    </a>
+
+                    <button id="download-ics-btn" type="button"
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-chocolate border border-chocolate/30 px-6 py-3 rounded-full font-sansClean text-[11px] font-medium tracking-[0.22em] uppercase shadow-xs hover:bg-softBlush/50 transition-all">
+                        <span>⬇</span>
+                        <span>Download .ICS</span>
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- SECTION 4: VENUE & NAVIGATION (EXACT GOOGLE MAPS PIN)           -->
+            <!-- =============================================================== -->
+            <section id="section-4-venue" class="reveal-section relative px-6 py-14 sm:px-12 sm:py-16 text-center border-t border-chocolate/10 bg-gradient-to-b from-heroCream via-white/80 to-softBlush/50 overflow-hidden">
+
+                <!-- Section Header -->
+                <p class="font-sansClean text-[10px] sm:text-xs tracking-[0.32em] uppercase text-royalGold font-semibold mb-2">
+                    Destination &amp; Route
+                </p>
+                <h2 class="font-editorial text-2xl sm:text-4xl text-chocolate tracking-[0.12em] uppercase mb-4">
+                    Venue &amp; Navigation
+                </h2>
+
+                <div class="flex items-center justify-center gap-3 mb-8 w-full max-w-xs mx-auto">
+                    <span class="h-[1px] flex-1 bg-chocolate/20"></span>
+                    <span class="text-royalGold text-sm">❖</span>
+                    <span class="h-[1px] flex-1 bg-chocolate/20"></span>
+                </div>
+
+                <!-- 1. Venue Name & Full Address Card -->
+                <div class="relative bg-white border border-royalGold/45 rounded-sm p-6 sm:p-8 shadow-[0_12px_35px_rgba(59,35,20,0.06)] mb-7">
+                    <span class="absolute top-2.5 left-2.5 w-3.5 h-3.5 border-t border-l border-royalGold"></span>
+                    <span class="absolute top-2.5 right-2.5 w-3.5 h-3.5 border-t border-r border-royalGold"></span>
+                    <span class="absolute bottom-2.5 left-2.5 w-3.5 h-3.5 border-b border-l border-royalGold"></span>
+                    <span class="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 border-b border-r border-royalGold"></span>
+
+                    <!-- Location Pin Emblem -->
+                    <div class="w-12 h-12 rounded-full bg-softBlush/80 border border-royalGold/40 flex items-center justify-center text-chocolate mx-auto mb-4">
+                        <svg class="w-6 h-6 text-royalGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+
+                    <h3 class="font-royalDeco text-2xl sm:text-3xl text-chocolate font-bold tracking-wide mb-1">
+                        Gulvani Maharaja Math
+                    </h3>
+                    <p class="font-sansClean text-[11px] tracking-[0.18em] uppercase text-royalGold font-medium mb-3">
+                        (Shri Vasudevananda Saraswati Dharmashala)
+                    </p>
+                    <p id="venue-address-text" class="font-serifBody text-lg sm:text-xl text-chocolate/90 leading-relaxed">
+                        Sangam Road, Deval Ganagapur,<br>
+                        District Kalaburagi, Karnataka &ndash; 585212
+                    </p>
+                </div>
+
+                <!-- 2. Embedded Interactive Google Maps Card (Exact Pinned Location) -->
+                <div class="bg-white p-2 border border-royalGold/45 rounded-sm shadow-md mb-7 overflow-hidden">
+                    <div class="relative w-full h-64 sm:h-72 overflow-hidden rounded-xs border border-chocolate/10 bg-softBlush/40">
+                        <iframe
+                            title="Gulvani Maharaja Math - Shri Vasudevananda Saraswati Dharmashala Map"
+                            src="https://maps.google.com/maps?q=Shri+Vasudevananda+Saraswati+Dharmashala,+Sangam+Rd,+Ganagapur,+Karnataka+585212&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                            class="w-full h-full border-0"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- 3. Prominent "Get Directions" (Your Exact Google Maps Pin) & "Copy Address" Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
+                    <a href="https://maps.app.goo.gl/pZw46nXEu2dhZzRD9"
+                       target="_blank" rel="noopener noreferrer"
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-chocolate text-heroCream border border-royalGold/70 px-7 py-3.5 rounded-full font-sansClean text-[11px] font-semibold tracking-[0.24em] uppercase shadow-lg hover:bg-darkCocoa transition-all">
+                        <svg class="w-4 h-4 text-lightGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                        </svg>
+                        <span>Get Directions</span>
+                    </a>
+
+                    <button id="copy-address-btn" type="button"
+                       class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-chocolate border border-chocolate/30 px-6 py-3.5 rounded-full font-sansClean text-[11px] font-medium tracking-[0.22em] uppercase shadow-xs hover:bg-softBlush/50 transition-all">
+                        <span>📋</span>
+                        <span id="copy-address-text">Copy Address</span>
+                    </button>
+                </div>
+
+                <!-- 4. Royal Closing Footer -->
+                <div class="pt-8 border-t border-chocolate/15">
+                    <p class="font-editorial text-lg tracking-[0.3em] text-royalGold font-semibold mb-2">
+                        S &bull; A
+                    </p>
+                    <p class="font-serifBody italic text-lg sm:text-xl text-chocolate/85 max-w-sm mx-auto leading-relaxed">
+                        We eagerly await your presence to bless the couple and share in our joy.
+                    </p>
+                    <p class="font-sansClean text-[10px] tracking-[0.26em] uppercase text-chocolate/70 mt-4">
+                        With Warm Regards,<br>
+                        <span class="font-semibold text-chocolate">Lokhande &amp; Hibare Families</span>
+                    </p>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Interactive JavaScript for 3D Gate, Flute Audio, Countdown, .ICS & Copy Address -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gateOverlay = document.getElementById('royal-gate-overlay');
+            const gateTrigger = document.getElementById('gate-trigger');
+            const gateUiOverlay = document.getElementById('gate-ui-overlay');
+            const musicToggle = document.getElementById('music-toggle');
+            const bgMusic = document.getElementById('bg-music');
+            const musicIcon = document.getElementById('music-icon');
+            const musicText = document.getElementById('music-text');
+
+            let isPlaying = false;
+            let isGateOpened = false;
+
+            function toggleAudio(forcePlay = false) {
+                if (forcePlay || !isPlaying) {
+                    bgMusic.volume = 0.35;
+                    bgMusic.play().then(() => {
+                        isPlaying = true;
+                        musicIcon.textContent = '🎵';
+                        musicText.textContent = 'Pause Flute';
+                    }).catch(() => {
+                        isPlaying = false;
+                    });
+                } else {
+                    bgMusic.pause();
+                    isPlaying = false;
+                    musicIcon.textContent = '🔇';
+                    musicText.textContent = 'Play Flute';
+                }
+            }
+
+            // Open 3D Swinging Palace Doors on Tap
+            gateTrigger.addEventListener('click', () => {
+                if (isGateOpened) return;
+                isGateOpened = true;
+                gateUiOverlay.style.opacity = '0';
+                gateOverlay.classList.add('gate-opened');
+                toggleAudio(true);
+            });
+
+            // Manual Music Toggle Button
+            musicToggle.addEventListener('click', () => {
+                toggleAudio();
+            });
+
+            // Smooth Scroll Reveal for Sections
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.reveal-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // =================================================================
+            // LIVE COUNTDOWN TIMER TO 29 NOV 2026, 11:30 AM IST (+05:30)
+            // =================================================================
+            const eventDate = new Date('2026-11-29T11:30:00+05:30').getTime();
+            const daysEl = document.getElementById('cd-days');
+            const hoursEl = document.getElementById('cd-hours');
+            const minsEl = document.getElementById('cd-mins');
+            const secsEl = document.getElementById('cd-secs');
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = eventDate - now;
+
+                if (distance <= 0) {
+                    daysEl.textContent = '00';
+                    hoursEl.textContent = '00';
+                    minsEl.textContent = '00';
+                    secsEl.textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minsEl.textContent = String(mins).padStart(2, '0');
+                secsEl.textContent = String(secs).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // =================================================================
+            // DOWNLOAD .ICS CALENDAR FILE GENERATOR
+            // =================================================================
+            const downloadIcsBtn = document.getElementById('download-ics-btn');
+            downloadIcsBtn.addEventListener('click', () => {
+                const icsContent = [
+                    'BEGIN:VCALENDAR',
+                    'VERSION:2.0',
+                    'PRODID:-//Akash & Sakshi Engagement//EN',
+                    'BEGIN:VEVENT',
+                    'UID:akash-sakshi-engagement-20261129@invite',
+                    'DTSTAMP:20261121T120000Z',
+                    'DTSTART:20261129T060000Z',
+                    'DTEND:20261129T093000Z',
+                    'SUMMARY:Engagement Ceremony - Akash & Sakshi',
+                    'DESCRIPTION:Cordially invited by Smt. Sarita Digambar Lokhande & Shri Digambar Laxman Lokhande to celebrate the Engagement Ceremony of Sakshi & Akash. Ring Ceremony: 11:30 AM, Festive Lunch: 1:00 PM. Maps: https://maps.app.goo.gl/pZw46nXEu2dhZzRD9',
+                    'LOCATION:Gulvani Maharaja Math (Shri Vasudevananda Saraswati Dharmashala), Sangam Rd, Deval Ganagapur, Karnataka 585212',
+                    'END:VEVENT',
+                    'END:VCALENDAR'
+                ].join('\r\n');
+
+                const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Akash_Sakshi_Engagement.ics');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            });
+
+            // =================================================================
+            // COPY VENUE ADDRESS BUTTON
+            // =================================================================
+            const copyAddressBtn = document.getElementById('copy-address-btn');
+            const copyAddressText = document.getElementById('copy-address-text');
+            copyAddressBtn.addEventListener('click', () => {
+                const fullAddress = 'Gulvani Maharaja Math (Shri Vasudevananda Saraswati Dharmashala), Sangam Road, Deval Ganagapur, Karnataka 585212';
+                navigator.clipboard.writeText(fullAddress).then(() => {
+                    copyAddressText.textContent = 'Address Copied!';
+                    setTimeout(() => {
+                        copyAddressText.textContent = 'Copy Address';
+                    }, 2500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
